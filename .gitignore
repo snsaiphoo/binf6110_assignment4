@@ -5,4 +5,6 @@
 *.rds
 *.Rproj
 .RDataTmp
+.RDataTmp1
+.RDataTmp2
 /results
