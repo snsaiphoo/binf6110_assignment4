@@ -49,12 +49,16 @@ Following filtering, gene expression counts were normalized using log normalizat
 #### 2.3 - Dimensionality Reduction with PCA
 Due to the high-dimensional nature of scRNA-seq data, dimensionality reduction is a necessary step to make the data manageable and to reveal underlying biological structure [16]. Principal component analysis (PCA) was performed on the scaled HVGs using `RunPCA()`, reducing the data into a lower-dimensional representation while retaining the major sources of variation. An elbow plot was generated to assess the variance explained by each principal component and inform the selection of significant PCs for downstream clustering. The PCA plot revealed clear structure with cells forming distinct branches, capturing meaningful patterns of variation [16]. Samples were well mixed across the PCA space, indicating minimal batch effects and that variation is primarily driven by biology.
 
-### 3.0 - Generating UMAPs with Clusters
-#### 3.1 - FindNeighbors()
+### 3.0 - Clustering and UMAP
 
-#### 3.2 - FindClusters() 
+#### 3.1 - FindNeighbors()
+A shared nearest neighbour (SNN) graph was constructed using `FindNeighbors()` based on the first 40 principal components, as determined by visual inspection of the elbow plot. This graph forms the basis for graph-based clustering in the following step [16].
+
+#### 3.2 - FindClusters() and UMAP
+Clustering was performed using `FindClusters()` across a range of resolutions (0.1 to 0.8) to identify the optimal granularity of clusters [19]. To determine the most appropriate resolution, the clustree package was used to visualize cluster stability across resolutions, as outlined in a scRNA-seq clustering tutorial [19]. The clustree plot was evaluated at each resolution to identify the point at which clusters remained stable without producing an excessive number of random branches, indicating over-clustering. A resolution of 0.4 was selected based on this assessment, as it represented the point where cluster structure was stable and biologically interpretable. UMAP was then run using `RunUMAP()` on the first 40 PCs to produce the final visualization. It should also be noted that the original authors also used 40 PCs for their downstream analysis; a higher resolution of 0.6 was used in their pipeline, which was supported by multiple rounds of filtering that produced a more refined dataset [3, 20]. A more conservative resolution of 0.4 was selected, as only a single round of filtering was applied.
 
 #### 3.3 - Checking for Batch Effects
+Batch effects were assessed by visualizing the UMAP coloured by `mouse_id`. Cells from all conditions were well mixed within clusters, indicating minimal batch effects. No batch correction was therefore applied. UMAP plots were additionally generated coloured by tissue type to examine whether clustering reflected tissue of origin or broader biological variation.
 
 
 
@@ -81,3 +85,5 @@ Due to the high-dimensional nature of scRNA-seq data, dimensionality reduction i
 [16] “Seurat - Guided Clustering Tutorial,” satijalab.org, Oct. 31, 2023. https://satijalab.org/seurat/articles/pbmc3k_tutorial.html <br/>
 [17] “Plot the Barcode Distribution and Calculated Inflection Points — BarcodeInflectionsPlot,” Satijalab.org, 2026. https://satijalab.org/seurat/reference/barcodeinflectionsplot (accessed Apr. 8, 2026). <br/>
 [18] M. Su et al., “Data analysis guidelines for single-cell RNA-seq in biomedical studies and clinical applications,” Military Medical Research, vol. 9, no. 1, Dec. 2022, doi: https://doi.org/10.1186/s40779-022-00434-8. <br/>
+[19] “Chapter 4 Clustering | scRNAseq Analysis in R with Seurat,” Github.io, 2025. https://swbioinf.github.io/scRNAseqInR_Doco/clustering.html (accessed Apr. 8, 2026).  <br/>
+[20] jo-m-lab, “GitHub - jo-m-lab/IAV-nasal-sc-atlas at v1.0.0,” GitHub, May 02, 2024. https://github.com/jo-m-lab/IAV-nasal-sc-atlas/tree/v1.0.0 (accessed Apr. 8, 2026).  <br/>
