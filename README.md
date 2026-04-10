@@ -28,12 +28,26 @@ The dataset used in this analysis was provided as a pre-made Seurat object, cons
 #### 1.2 - R Environment
 Analysis was performed using R version 4.5.1. All required CRAN and Bioconductor dependencies are specified in the [`environment.R`](scripts/environment.R) script, which can be used to reproduce the R environment used for this analysis, including package version numbers.
 
-### 2.0 - Data Preprocessing 
-#### 2.1 - Removing Low Quality Cells 
+### 2.0 - Data Preprocessing
 
-#### 2.2 - Selecting Highly Variable Genes
+#### 2.1 - Removing Low Quality Cells
+Multiple vignettes were consulted to determine appropriate preprocessing methods for scRNA-seq analysis, including the Seurat vignette [16]. Quality control (QC) filtering was performed to remove low-quality cells prior to downstream analysis. Commonly used QC metrics include the number of detected genes and the proportion of mitochondrial gene expression, where high mitochondrial proportions indicate dying or stressed cells and low gene counts suggest damaged cells [16]. A knee plot was used to identify a natural inflection point to guide filtering thresholds [17]. Cells with high hemoglobin gene expression were filtered to remove red blood cell contamination [18], and cells with extreme ribosomal gene expression were excluded as an additional quality criterion [17].
+
+Metrics were visualized using violin plots and a knee plot to inform threshold selection. The following filtering criteria were applied:
+
+- `nFeature_RNA` between 500 and 4,000
+- `nCount_RNA` between 1,000 and 10,000
+- `percent.mt` below 15%
+- `percent.hb` below 5%
+- `percent.ribo` below 50%
+
+Filtering removed 603 cells (0.39%) from the original 156,572, indicating the dataset was already of high quality prior to filtering. Post-filtering cell counts per condition were as follows: Naive: 30,261; D02: 40,003; D05: 26,235; D08: 29,416; D14: 30,054.
+
+#### 2.2 - Normalization and Selecting Highly Variable Genes
+Following filtering, gene expression counts were normalized using log normalization via `NormalizeData()`, which scales each cell to a total count of 10,000 before applying a log transformation. Highly variable genes (HVGs) were then identified using `FindVariableFeatures()` with the variance-stabilizing transformation (VST) method, selecting the top 2,000 most variable genes for downstream analysis. The data was subsequently scaled using `ScaleData()` to ensure equal contribution of each gene during dimensionality reduction [16].
 
 #### 2.3 - Dimensionality Reduction with PCA
+Due to the high-dimensional nature of scRNA-seq data, dimensionality reduction is a necessary step to make the data manageable and to reveal underlying biological structure [16]. Principal component analysis (PCA) was performed on the scaled HVGs using `RunPCA()`, reducing the data into a lower-dimensional representation while retaining the major sources of variation. An elbow plot was generated to assess the variance explained by each principal component and inform the selection of significant PCs for downstream clustering. The PCA plot revealed clear structure with cells forming distinct branches, capturing meaningful patterns of variation [16]. Samples were well mixed across the PCA space, indicating minimal batch effects and that variation is primarily driven by biology.
 
 ### 3.0 - Generating UMAPs with Clusters
 #### 3.1 - FindNeighbors()
@@ -64,3 +78,6 @@ Analysis was performed using R version 4.5.1. All required CRAN and Bioconductor
 [13] Q. Huang, Y. Liu, Y. Du, and L. X. Garmire, “Evaluation of Cell Type Annotation R Packages on Single-cell RNA-seq Data,” Genomics, Proteomics & Bioinformatics, vol. 19, no. 2, Dec. 2020, doi: https://doi.org/10.1016/j.gpb.2020.07.004.  <br/>
 [14] A. L. Thurman, J. A. Ratcliff, M. S. Chimenti, and A. A. Pezzulo, “Differential gene expression analysis for multi-subject single-cell RNA-sequencing studies with aggregateBioVar,” Bioinformatics, vol. 37, no. 19, pp. 3243–3251, Apr. 2021, doi: https://doi.org/10.1093/bioinformatics/btab337.  <br/>
 [15] T. Wu et al., “clusterProfiler 4.0: A universal enrichment tool for interpreting omics data,” The Innovation, vol. 2, no. 3, p. 100141, Aug. 2021. <br/>
+[16] “Seurat - Guided Clustering Tutorial,” satijalab.org, Oct. 31, 2023. https://satijalab.org/seurat/articles/pbmc3k_tutorial.html <br/>
+[17] “Plot the Barcode Distribution and Calculated Inflection Points — BarcodeInflectionsPlot,” Satijalab.org, 2026. https://satijalab.org/seurat/reference/barcodeinflectionsplot (accessed Apr. 8, 2026). <br/>
+[18] M. Su et al., “Data analysis guidelines for single-cell RNA-seq in biomedical studies and clinical applications,” Military Medical Research, vol. 9, no. 1, Dec. 2022, doi: https://doi.org/10.1186/s40779-022-00434-8. <br/>
