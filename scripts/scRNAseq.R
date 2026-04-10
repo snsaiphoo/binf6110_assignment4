@@ -235,10 +235,25 @@ ggsave("../figures/umap_full.png", umap_full, width = 8, height = 6, dpi = 300)
 # UMAP colored by sample shows cells from all conditions are well mixed within 
 # clusters, indicating minimal batch effects. No batch correction was applied.
 
+##### UMAP across Tissues ####
+p1 <- DimPlot(nasal, label = TRUE) + 
+  ggtitle("Base UMAP") + theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 16)) + NoLegend()
+
+p2 <- DimPlot(nasal, group.by = "organ_custom") + 
+  ggtitle("Tissue Type")  + theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 16)) 
+
+ggsave("../figures/umap_tissue.png", p2, width = 8, height = 6, dpi = 300) 
+
+p1 + p2
+
+ggsave("../figures/umap_cluster_tissue.png", p1+p2, width = 18, height = 10, dpi = 300)
+
+
 # saveRDS(nasal, file = "../results/nasal_premarkers.rds")
 ##### Cell-type annotations #####
 # Find all marker genes
-# nasal <- readRDS("../results/nasal_premarkers.rds")
+nasal <- readRDS("../results/nasal_premarkers.rds")
+
 
 nasal.markers <- FindAllMarkers(
   nasal,
@@ -580,6 +595,14 @@ ggsave(
   dpi = 300
 )
 
+vln_tissue <- VlnPlot(
+  nasal, 
+  features = c("Phf11d", "Hk2"), 
+  group.by = "organ_custom"
+)
+
+ggsave("../figures/vln_neutro_tissue.png", vln_tissue, width = 10, height = 6)
+
 ##### Enrichment #####
 # ORA - Macrophages
 run_ora <- function(de_results, celltype_name) {
@@ -610,3 +633,4 @@ run_ora(de_mac, "Macrophages")
 run_ora(de_t, "T cells")
 
 saveRDS(nasal, file = "../results/nasal_final.rds")
+nasal <- readRDS("../results/nasal_final.rds")
