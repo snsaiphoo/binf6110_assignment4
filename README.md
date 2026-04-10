@@ -19,6 +19,30 @@ Differential gene expression (DGE) analysis identifies genes that change between
 To determine the biological significance of the differentially expressed genes identified between infection time points, over-representation analysis (ORA) will be performed using clusterProfiler [15]. For each comparison between infection stages, ORA will identify which biological pathways and processes are significantly enriched, helping to clarify how the cellular response changes as infection progresses. This will make it possible to pinpoint stage-specific changes, such as shifts in immune activation or inflammatory signaling, that would not be obvious from looking at individual gene results alone.
 
 ## Methods
+The scRNA-seq analysis consists of a single R script located in the [`scripts`](scripts/) folder, which can be run to execute the steps detailed below. The dataset can be accessed through the article "Primary nasal influenza infection rewires tissue-scale memory response dynamics" by Kazer et al. [3], available through the [original publication](https://doi.org/10.1016/j.immuni.2024.06.005).
+
+### 1 - Data & Tools
+#### 1.1 - Data Acquisition
+The dataset used in this analysis was provided as a pre-made Seurat object, consisting of 156,572 cells and 25,129 genes across three tissue types collected at five infection stages.
+
+#### 1.2 - R Environment
+Analysis was performed using R version 4.5.1. All required CRAN and Bioconductor dependencies are specified in the [`environment.R`](scripts/environment.R) script, which can be used to reproduce the R environment used for this analysis, including package version numbers.
+
+### 2.0 - Data Preprocessing 
+#### 2.1 - Removing Low Quality Cells 
+
+#### 2.2 - Selecting Highly Variable Genes
+
+#### 2.3 - Dimensionality Reduction with PCA
+
+### 3.0 - Generating UMAPs with Clusters
+#### 3.1 - FindNeighbors()
+
+#### 3.2 - FindClusters() 
+
+#### 3.3 - Checking for Batch Effects
+
+
 
 ## Results
 
