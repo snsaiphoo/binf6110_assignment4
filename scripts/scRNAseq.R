@@ -76,7 +76,7 @@ knee_plot <- BarcodeInflectionsPlot(nasal)
 # Based on QC plots:
 # nFeature_RNA: remove low-quality cells (<500) and likely doublets (>4000)
 # nCount_RNA: remove near-empty droplets (<1000) and outlier high-count cells (>10000)
-# percent.mt: <15% threshold, slightly lenient for infection context
+# percent.mt: <15% threshold, to account for infection and based on violin plots
 # percent.hb: <5% to remove rare RBC-contaminated cells
 # percent.ribo: <50% to exclude extreme ribosomal outliers 
 
@@ -105,7 +105,7 @@ table(nasal$orig.ident)
 
 # QC Results
 # Filtering removed 603 cells (0.39%) from 156,572 total, low removal rate
-# confirming data was already high quality prior to filtering.
+# confirming data was already high quality
 # Pre vs Post filtering cell counts
 # D02: 40,148 -> 40,003
 # D05: 26,344 -> 26,235
@@ -150,9 +150,9 @@ pca <- DimPlot(nasal, reduction = "pca") + ggtitle("PC1-PC2") +
     plot.title = element_text(hjust = 0.7)  # center the title
   )
 
-# PCA shows clear structure with cells forming distinct branches, suggesting
-# underlying biological heterogeneity. Samples are well mixed across the space,
-# indicating minimal batch effects and that variation is driven by biology.
+# PCA shows clear structure with cells forming distinct branches, 
+# suggesting meaningful patterns of variation were captured 
+# also indicating minimal batch effects and that variation is driven by biology.
 
 ggsave(
   filename = "../figures/pca_plot.png",
