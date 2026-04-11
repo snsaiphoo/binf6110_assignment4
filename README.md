@@ -22,6 +22,7 @@ To determine the biological significance of the differentially expressed genes i
 The scRNA-seq analysis consists of a single R script located in the [`scripts`](scripts/) folder, which can be run to execute the steps detailed below. The dataset can be accessed through the article "Primary nasal influenza infection rewires tissue-scale memory response dynamics" by Kazer et al. [3], available through the [original publication](https://doi.org/10.1016/j.immuni.2024.06.005).
 
 ### 1.0 - Data & Tools
+
 #### 1.1 - Data Acquisition
 The dataset used in this analysis was provided as a pre-made Seurat object, consisting of 156,572 cells and 25,129 genes across three tissue types collected at five infection stages.
 
@@ -66,11 +67,31 @@ Batch effects were assessed by visualizing the UMAP coloured by `mouse_id`. Cell
 To identify marker genes for each cluster, `FindAllMarkers()` was run using only positive markers, with a log2 fold-change threshold of 0.5, a minimum cell expression proportion of 0.2, and a maximum of 1,000 cells per identity, consistent with the approach used in the original study [3, 20]. The log2 fold-change threshold ensures that only genes meaningfully enriched in a cluster relative to all others are retained, as broadly expressed genes are not useful for cluster identification. The top 5 marker genes per cluster were extracted and inspected, prioritizing genes with high expression within the cluster of interest (pct.1) and low expression elsewhere (pct.2), as together these metrics capture how localized a gene's expression is to a specific cluster. For selected clusters, `FeaturePlot()` was used to visually confirm marker gene expression on the UMAP.
 
 #### 4.2 - Manual Annotation
-The top 4 genes per cluster were selected based on the pct.1 and pct.2 criteria described above and researched to determine their known biological functions and infer cluster identity. Clusters were then manually assigned cell type labels, with several sharing the same high-level identity merged for simplicity. Once complete, annotations were cross-referenced against the Broad Institute Single Cell Portal, where the data from the original study has been publicly deposited [3], to confirm labelling decisions. The final annotations were saved to the metadata and visualized on the UMAP.
+The top 4 genes per cluster were selected based on the pct.1 and pct.2 criteria described above and researched to determine their known biological functions and infer cluster identity. Clusters were then manually assigned cell type labels, with several sharing the same high-level identity merged for simplicity. Not all clusters were annotated leaving the remaining clusters to be grouped as "Other" on the UMAP. Once complete, annotations were cross-referenced against the Broad Institute Single Cell Portal, where the data from the original study has been publicly deposited [3], to confirm labelling decisions. The final annotations were saved to the metadata and visualized on the UMAP.
 
 #### 4.3 - Automated Annotation
 Automated cell type annotation was performed using SingleR to compare with the manual annotations [13]. The Seurat object was converted to a SingleCellExperiment object and annotated against two reference datasets: MouseRNAseqData for general mouse cell types [22] and ImmGenData for mouse immune cell types [23], with the use of both informed by the immune and non-immune populations identified during manual annotation. Parallelization was applied using BiocParallel with `SnowParam()` across 4 workers to manage the increased computational load, as all processes were run on a local machine [24]. The resulting labels were added to the metadata and a comparison between manual and SingleR annotations was produced to assess agreement between the two approaches.
 
+### 5.0 - Differential Gene Expression (DGE) Analysis
+
+#### 5.1 - Time Point and Cell Type Selection
+DGE analysis was performed comparing cells at 5 days post-infection (D05) and 14 days post-infection (D14), representing the peak immune response and viral clearance stages. The analysis focused on six immune cell types: T cells, NK cells, Dendritic cells, Macrophages, Monocytes, and Neutrophils. These were chosen from analyzing the annotated UMAPs, and identifiying cell types that clustered together. Cells with unassigned mouse IDs were removed beforehand to ensure all observations could be attributed to a specific biological replicate.
+
+#### 5.2 - Pseudobulk Aggregation
+Gene expression counts were aggregated across cells within each combination of time point, mouse ID, and cell type using `AggregateExpression()`. Without this step, each individual cell would be treated as an independent observation, artificially inflating the sample size and leading to an elevated false positive rate. By reducing the data to one aggregated value per mouse per cell type per condition, the analysis is performed at the level of biological replicates rather than individual cells, giving more reliable results. Combined cell type and time point identities were then created to enable pairwise comparisons between D05 and D14 for each cell type.
+
+#### 5.3 - DESeq2 Differential Expression
+DGE between D05 and D14 was tested for each cell type using `FindMarkers()` with DESeq2 as the statistical test. For each comparison, D14 was set as `ident.1` and D05 as `ident.2`, meaning positive log2 fold-change values reflect genes upregulated at D14 and negative values reflect genes upregulated at D05. Results were filtered using an adjusted p-value threshold of 0.05. Heatmaps were generated for each cell type showing the top 10 most upregulated and top 10 most downregulated genes, ranked by average log2 fold-change, with gene expression values scaled prior to plotting.
+
+#### 5.4 - Feature Plot Validation
+To further support the differential expression findings, `FeaturePlot()` was used to visualize select genes of interest across time all the time points. For Macrophages, _Isg15_ and _Mrc1_ were plotted as representative markers of D05 and D14 activity. For Neutrophils, _Phf11d_ and _Hk2_ were visualized across time points.
+
+### 6.0 - Functional Enrichment Analysis
+
+#### 6.1 - Over-Representation Analysis (ORA)
+To identify the biological processes associated with the differentially expressed genes, over-representation analysis (ORA) was performed using the `enrichGO()` function from the clusterProfiler package [15]. For each cell type, genes were filtered to retain only those that were significantly upregulated at D14 relative to D05, using an adjusted p-value threshold of 0.05 and a log2 fold-change threshold of 0.5. This focused the analysis on genes associated with the transition from peak immune response to viral clearance.
+
+Gene symbols were first converted to Entrez IDs using `bitr()` with the mouse annotation database `org.Mm.eg.db`, as this is required for GO enrichment testing. ORA was then performed against the Biological Process (BP) ontology, which captures the higher-level biological processes that genes are involved in. The top 10 enriched GO terms were visualized as dot plots for each cell type.
 
 ## Results
 
