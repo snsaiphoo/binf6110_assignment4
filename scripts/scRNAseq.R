@@ -9,7 +9,7 @@ library(DESeq2)
 library(pheatmap)
 library(clusterProfiler)
 library(org.Mm.eg.db)
-
+library(BiocParallel)
 
 # load in Seurat object 
 nasal <- readRDS("../seurat_ass4.rds")
@@ -393,8 +393,6 @@ sce <- as.SingleCellExperiment(nasal)
 ref_mouse <- MouseRNAseqData()
 
 ref_immune  <- ImmGenData()
-
-library(BiocParallel)
 
 param <- SnowParam(workers = 4, type = "SOCK") 
 
