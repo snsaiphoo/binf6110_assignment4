@@ -492,12 +492,12 @@ levels(Idents(pseudo_nasal))
 # Plotting heatmap function
 plot_heatmap <- function(de_results, celltype_name, pseudo_obj, top_n = 10) {
 
-  # Filter for significant genes (p < 0.05)
+  # Filter for significant genes (padj < 0.05)
   sig_res <- de_results %>% 
     filter(p_val_adj < 0.05)
   
   if (nrow(sig_res) < 2) {
-    message(paste(celltype_name, "- no significant genes found."))
+    print(paste(celltype_name, "- no significant genes found."))
     return(NULL)
   }
   
