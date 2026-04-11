@@ -14,14 +14,14 @@ Selecting an appropriate scRNA-seq analysis framework involves balancing computa
 
 Cell type annotation allows clusters to be given biological meaning, but manual annotation is often subjective and inconsistent. Several automated tools have been developed to address this, including Seurat, SingleR, scmap, and CHETAH [9, 10, 11, 12]. Benchmarking studies show that most methods perform reasonably well overall, but accuracy tends to drop when distinguishing rare or closely related cell types [10]. Seurat identifies major cell types reliably but is less suited to resolving subtle or rare populations [10]. SingleR, by contrast, assigns cell identities by comparing expression profiles to reference transcriptomic datasets, which produces more consistent and objective annotations [13]. For these reasons, SingleR will be used to annotate cell types in this study.
 
-Differential gene expression (DGE) analysis identifies genes that change between conditions, but results can be affected by variability at both the cell and subject levels. Standard cell-level approaches, such as those used in Seurat, treat each cell as an independent observation, which introduces pseudoreplication and can inflate false discovery rates [9,14]. Pseudobulk methods avoid this problem by summing counts across cells within each sample before performing statistical testing, making the analysis more reliable [14]. DGE analysis will therefore be carried out using a pseudobulk approach, in which DESeq2 is called through the Seurat FindMarkers function [9], combining the accessibility of Seurat's workflow with the statistical robustness of pseudobulk-level testing.
+Differential gene expression (DGE) analysis identifies genes that change between conditions, but results can be affected by variability at both the cell and subject levels. Standard cell-level approaches, such as those used in Seurat, treat each cell as an independent observation, which can inflate false discovery rates [9,14]. Pseudobulk methods avoid this problem by summing counts across cells within each sample before performing statistical testing, making the analysis more reliable [14]. DGE analysis will therefore be carried out using a pseudobulk approach, in which DESeq2 is called through the Seurat FindMarkers function [9], combining the accessibility of Seurat's workflow with the statistical robustness of pseudobulk-level testing.
 
 To determine the biological significance of the differentially expressed genes identified between infection time points, over-representation analysis (ORA) will be performed using clusterProfiler [15]. For each comparison between infection stages, ORA will identify which biological pathways and processes are significantly enriched, helping to clarify how the cellular response changes as infection progresses. This will make it possible to pinpoint stage-specific changes, such as shifts in immune activation or inflammatory signaling, that would not be obvious from looking at individual gene results alone.
 
 ## Methods
 The scRNA-seq analysis consists of a single R script located in the [`scripts`](scripts/) folder, which can be run to execute the steps detailed below. The dataset can be accessed through the article "Primary nasal influenza infection rewires tissue-scale memory response dynamics" by Kazer et al. [3], available through the [original publication](https://doi.org/10.1016/j.immuni.2024.06.005).
 
-### 1 - Data & Tools
+### 1.0 - Data & Tools
 #### 1.1 - Data Acquisition
 The dataset used in this analysis was provided as a pre-made Seurat object, consisting of 156,572 cells and 25,129 genes across three tissue types collected at five infection stages.
 
@@ -60,6 +60,16 @@ Clustering was performed using `FindClusters()` across a range of resolutions (0
 #### 3.3 - Checking for Batch Effects
 Batch effects were assessed by visualizing the UMAP coloured by `mouse_id`. Cells from all conditions were well mixed within clusters, indicating minimal batch effects. No batch correction was therefore applied. UMAP plots were additionally generated coloured by tissue type to examine whether clustering reflected tissue of origin or broader biological variation.
 
+### 4.0 - Cell Type Annotation
+
+#### 4.1 - FindAllMarkers()
+To identify marker genes for each cluster, `FindAllMarkers()` was run using only positive markers, with a log2 fold-change threshold of 0.5, a minimum cell expression proportion of 0.2, and a maximum of 1,000 cells per identity, consistent with the approach used in the original study [3, 20]. The log2 fold-change threshold ensures that only genes meaningfully enriched in a cluster relative to all others are retained, as broadly expressed genes are not useful for cluster identification. The top 5 marker genes per cluster were extracted and inspected, prioritizing genes with high expression within the cluster of interest (pct.1) and low expression elsewhere (pct.2), as together these metrics capture how localized a gene's expression is to a specific cluster. For selected clusters, `FeaturePlot()` was used to visually confirm marker gene expression on the UMAP.
+
+#### 4.2 - Manual Annotation
+The top 4 genes per cluster were selected based on the pct.1 and pct.2 criteria described above and researched to determine their known biological functions and infer cluster identity. Clusters were then manually assigned cell type labels, with several sharing the same high-level identity merged for simplicity. Once complete, annotations were cross-referenced against the Broad Institute Single Cell Portal, where the data from the original study has been publicly deposited [3], to confirm labelling decisions. The final annotations were saved to the metadata and visualized on the UMAP.
+
+#### 4.3 - Automated Annotation
+Automated cell type annotation was performed using SingleR to compare with the manual annotations [13]. The Seurat object was converted to a SingleCellExperiment object and annotated against two reference datasets: MouseRNAseqData for general mouse cell types [22] and ImmGenData for mouse immune cell types [23], with the use of both informed by the immune and non-immune populations identified during manual annotation. Parallelization was applied using BiocParallel with `SnowParam()` across 4 workers to manage the increased computational load, as all processes were run on a local machine [24]. The resulting labels were added to the metadata and a comparison between manual and SingleR annotations was produced to assess agreement between the two approaches.
 
 
 ## Results
@@ -87,3 +97,7 @@ Batch effects were assessed by visualizing the UMAP coloured by `mouse_id`. Cell
 [18] M. Su et al., “Data analysis guidelines for single-cell RNA-seq in biomedical studies and clinical applications,” Military Medical Research, vol. 9, no. 1, Dec. 2022, doi: https://doi.org/10.1186/s40779-022-00434-8. <br/>
 [19] “Chapter 4 Clustering | scRNAseq Analysis in R with Seurat,” Github.io, 2025. https://swbioinf.github.io/scRNAseqInR_Doco/clustering.html (accessed Apr. 8, 2026).  <br/>
 [20] jo-m-lab, “GitHub - jo-m-lab/IAV-nasal-sc-atlas at v1.0.0,” GitHub, May 02, 2024. https://github.com/jo-m-lab/IAV-nasal-sc-atlas/tree/v1.0.0 (accessed Apr. 8, 2026).  <br/>
+[21] “Chapter 5 Using multiple references | Assigning cell types with SingleR,” Bioconductor.org, 2025. https://bioconductor.org/books/release/SingleRBook/using-multiple-references.html (accessed Apr. 8, 2026). <br/>
+[22] LTLA, “Obtain mouse bulk expression data of sorted cell populations...,” Rdrr.io, Jun. 03, 2024. https://rdrr.io/github/LTLA/celldex/man/MouseRNAseqData.html (accessed Apr. 8, 2026).  <br/>
+[23] LTLA, “Obtain mouse bulk expression data from the Immunologic Genome...,” Rdrr.io, Jun. 03, 2024. https://rdrr.io/github/LTLA/celldex/man/ImmGenData.html (accessed Apr. 8, 2026).  <br/>
+[24] “1. Introduction to BiocParallel,” Bioconductor.org, 2022. https://www.bioconductor.org/packages//release/bioc/vignettes/BiocParallel/inst/doc/Introduction_To_BiocParallel.html#clusters-of-independent-processes-with-snowparam (accessed Apr. 8, 2026). <br/>
