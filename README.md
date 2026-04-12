@@ -54,7 +54,7 @@ Dimensionality reduction is a necessary step in scRNA-seq analysis, as this data
 A shared nearest neighbour (SNN) graph was constructed using `FindNeighbors()` based on the first 40 principal components, as determined by visual inspection of the elbow plot. This graph forms the basis for graph-based clustering in the following step [16].
 
 #### 3.2 - FindClusters() and UMAP
-Clustering was performed using `FindClusters()` across a range of resolutions (0.1 to 0.8) to identify the optimal granularity of clusters [19]. To determine the most appropriate resolution, the clustree package was used to visualize cluster stability across resolutions, as outlined in a scRNA-seq clustering tutorial [19]. The clustree plot was evaluated at each resolution to identify the point at which clusters remained stable without producing an excessive number of random branches, indicating over-clustering. A resolution of 0.4 was selected based on this assessment, as it represented the point where cluster structure was stable and biologically interpretable. UMAP was then run using `RunUMAP()` on the first 40 PCs to produce the final visualization. It should also be noted that the original authors also used 40 PCs for their downstream analysis, along with a higher resolution of 0.6, which was supported by multiple rounds of filtering that produced a more refined dataset [3, 20].
+Clustering was performed using `FindClusters()` across a range of resolutions (0.1 to 0.8) to identify the optimal granularity of clusters [19]. To determine the most appropriate resolution, the clustree package was used to visualize cluster stability across resolutions, as outlined in a scRNA-seq clustering tutorial [19]. The clustree plot was evaluated at each resolution to identify the point at which clusters remained stable without producing an excessive number of random branches, indicating over-clustering. A resolution of 0.4 was selected based on this assessment, as it represented the point where cluster structure was stable and biologically interpretable. UMAP was then run using `RunUMAP()` on the first 40 PCs to produce the final visualization. 
 
 #### 3.3 - Checking for Batch Effects
 Batch effects were assessed by visualizing the UMAP coloured by `mouse_id`. UMAP plots were additionally generated, coloured by tissue type to examine whether clustering reflected tissue of origin or broader biological variation.
@@ -157,14 +157,18 @@ Figure 4. Post-filtering violin plots of key quality control metrics across all 
 </div>
 
 <br>
+Figure 5 displays the elbow plot of the first 50 principal components. The curve shows a gradual decline in standard deviation, beginning to flatten beyond PC 40, suggesting that the majority of meaningful biological variation is captured within the first 40 PCs. Based on this, the first 40 PCs were selected for downstream clustering and dimensionality reduction, which is consistent with the selection made by the original authors [3, 20].
+<br>
 
 <div align="center">
 <img src="figures/pca_plot.png" width=600" height="500"/>
 <br>
-<b>Figure 6. PC1-PC2 plot of cells across all samples. </b> Scatter plot of cells projected onto the first two principal components (PC1: 11.2%, PC2: 9.8%), colored by sample identity. Cells from all five samples intermix across the principal component space, suggesting no strong sample-specific batch effects. The distinct arms visible in the plot likely reflect major cell populations present across all samples.
+<b>Figure 6. PC1-PC2 plot of cells across all samples. </b> Scatter plot of cells projected onto the first two principal components (PC1: 11.2%, PC2: 9.8%), colored by sample identity. Cells from all five samples intermix across the principal component space.
 </div>
-
+</br>
+Figure 6 displays the PC1-PC2 plot, where cells from all five time points are well mixed across the PCA space, suggesting minimal batch effects. The distinct arms visible in the plot likely reflect major cell populations present across all samples.
 <br>
+</br>
 
 <div align="center">
 <img src="figures/umap_resolutions.png" width=600" height="500"/>
@@ -181,6 +185,9 @@ Figure 4. Post-filtering violin plots of key quality control metrics across all 
 </div>
 
 <br>
+Figure 7 displays UMAP plots across resolutions 0.1 to 0.8, showing an increasing number of clusters with higher resolutions. Figure 8 displays the clustree plot, where increasing random branching at higher resolutions indicated over-clustering, while resolution 0.4 showed stable clusters without any random branches. Based on this, a resolution of 0.4 was selected as the point where clusters were stable and biologically interpretable. The original authors used a higher resolution of 0.6, however this was supported by multiple rounds of filtering that produced a more refined dataset [3, 20]. Given that this analysis used a single filtering round, a more conservative resolution of 0.4 was chosen.
+<br>
+</br>
 
 <div align="center">
 <img src="figures/umap_batch.png" width=600" height="500"/>
