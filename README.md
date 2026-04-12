@@ -106,7 +106,44 @@ Gene symbols were first converted to Entrez IDs using `bitr()` with the mouse an
 <div align="center">
 <img src="figures/QC_violin_plot_2.png" width="600"/>
 <br>
-<b>Figure X. Pre-filtered Violin plots for mitochondrial, ribosomal, and hemoglobin gene percentages. </b> Violin plots showing the percentage of mitochondrial (percent.mt, left), ribosomal (percent.ribo, middle), and hemoglobin (percent.hb, right) gene counts per cell across five samples prior to filtering. The majority of cells show low mitochondrial and hemoglobin percentages, with rare extreme outliers. Cells were filtered at thresholds of <15% mitochondrial, <50% ribosomal, and <5% hemoglobin reads.
+<b>Figure X. Pre-filtered Violin plots for mitochondrial, ribosomal, and hemoglobin gene percentages. </b> Violin plots showing the percentage of mitochondrial (percent.mt, left), ribosomal (percent.ribo, middle), and hemoglobin (percent.hb, right) gene counts per cell across five samples prior to filtering. Individual cells are shown for percent.hb to highlight the sparse distribution of hemoglobin-expressing cells. The majority of cells show low mitochondrial and hemoglobin percentages, with rare extreme outliers. Cells were filtered at thresholds of <15% mitochondrial, <50% ribosomal, and <5% hemoglobin reads.
+</div>
+
+<br>
+
+<div align="center">
+<img src="figures/QC_knee_plot.png" width="400" height="400"/>
+<br>
+<b>Figure X. Pre-filtered Knee plot for cell rankings by total counts. </b> Cells from all five samples ranked by total count (log10 nCount_RNA). The gradual, consistent decline across all samples indicates that the vast majority of detected cells are of high quality, with no clear separation between real cells and empty droplets. This supported the use of minimal filtering thresholds to retain as many high-quality cells as possible.
+</div>
+
+<br>
+
+<div align="center">
+<img src="figures/QC_violin_plot_3.png" width=900" height="450"/>
+<br>
+<b>Figure X. Post-filtered Violin plots for all QC conditions. </b> Violin plots showing the distribution of detected genes, total counts, mitochondrial, hemoglobin, and ribosomal gene percentages per cell across five sampling times following quality control filtering. Individual cells are shown for percent.hb to highlight the sparse distribution of hemoglobin-expressing cells. Minimal filtering was required, reflecting the high baseline quality of the dataset.
+</div>
+
+<br>
+
+### Single-Cell Analysis 
+<br>
+
+<div align="center">
+<img src="figures/elbow_plot.png" width=600" height="400"/>
+<br>
+<b>Figure X. Elbow plot of first 50 PCs. </b> Standard deviation explained by each of the top 50 principal components (PCs). The curve gradually flattens beyond PC 40, suggesting that the majority of meaningful biological variation is captured within the first 40 PCs, which were selected for downstream clustering and dimensionality reduction.
+</div>
+
+<br>
+
+<br>
+
+<div align="center">
+<img src="figures/pca_plot.png" width=600" height="500"/>
+<br>
+<b>Figure X. PC1-PC2 plot of cells across all samples. </b> Scatter plot of cells projected onto the first two principal components (PC1: 11.2%, PC2: 9.8%), colored by sample identity. Cells from all five samples intermix across the principal component space, suggesting no strong sample-specific batch effects. The distinct arms visible in the plot likely reflect major cell populations present across all samples.
 </div>
 
 <br>
