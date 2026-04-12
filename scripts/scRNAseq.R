@@ -35,43 +35,45 @@ nasal[["percent.ribo"]] <- PercentageFeatureSet(nasal, pattern = "^Rp[sl]")
 vln_plot_1 <- VlnPlot(
   nasal,
   features = c("nFeature_RNA", "nCount_RNA"),
-  ncol = 2
+  ncol = 2,
+  pt.size = 0
 )
 
 vln_plot_2 <- VlnPlot(
   nasal,
   features = c("percent.mt", "percent.ribo", "percent.hb"),
-  ncol = 3
+  ncol = 3,
+  pt.size = 0
 )
 
-# ggsave(
-#   filename = "../figures/QC_violin_plot_1.png",
-#   plot = vln_plot_1,
-#   width = 10,
-#   height = 4,
-#   dpi = 300
-# )
-# 
-# ggsave(
-#   filename = "../figures/QC_violin_plot_2.png",
-#   plot = vln_plot_2,
-#   width = 10,
-#   height = 4,
-#   dpi = 300
-# )
+ggsave(
+  filename = "../figures/QC_violin_plot_1.png",
+  plot = vln_plot_1,
+  width = 10,
+  height = 4,
+  dpi = 300
+)
+
+ggsave(
+  filename = "../figures/QC_violin_plot_2.png",
+  plot = vln_plot_2,
+  width = 10,
+  height = 4,
+  dpi = 300
+)
 
 # Knee Plot
 nasal <- CalculateBarcodeInflections(nasal)
 
 knee_plot <- BarcodeInflectionsPlot(nasal)
 
-# ggsave(
-#   filename = "../figures/QC_knee_plot.png",
-#   plot = knee_plot,
-#   width = 6,
-#   height = 5,
-#   dpi = 300
-# )
+ggsave(
+  filename = "../figures/QC_knee_plot.png",
+  plot = knee_plot,
+  width = 6,
+  height = 5,
+  dpi = 300
+)
 
 # Based on QC plots:
 # nFeature_RNA: remove low-quality cells (<500) and likely doublets (>4000)
@@ -83,7 +85,7 @@ knee_plot <- BarcodeInflectionsPlot(nasal)
 nasal <- subset(
   nasal,
   subset = nFeature_RNA > 500 &
-    nFeature_RNA < 4000 &
+    nFeature_RNA < 3800 &
     nCount_RNA > 1000 &
     nCount_RNA < 10000 &
     percent.mt < 15 &
@@ -93,23 +95,23 @@ nasal <- subset(
 
 table(nasal$orig.ident)
 
-# vln_plot_3 <- VlnPlot(nasal, features = c("nFeature_RNA", "nCount_RNA", "percent.mt", "percent.hb", "percent.ribo"), ncol = 5)
+vln_plot_3 <- VlnPlot(nasal, features = c("nFeature_RNA", "nCount_RNA", "percent.mt", "percent.hb", "percent.ribo"), ncol = 5, pt.size = 0)
 
-# ggsave(
-#   filename = "../figures/QC_violin_plot_3.png",
-#   plot = vln_plot_3,
-#   width = 10,
-#   height = 4,
-#   dpi = 300
-# )
+ggsave(
+  filename = "../figures/QC_violin_plot_3.png",
+  plot = vln_plot_3,
+  width = 10,
+  height = 4,
+  dpi = 300
+)
 
 # QC Results
-# Filtering removed 603 cells (0.39%) from 156,572 total, low removal rate
+# Filtering removed 606 cells (0.39%) from 156,572 total, low removal rate
 # confirming data was already high quality prior to filtering.
 # Pre vs Post filtering cell counts
-# D02: 40,148 -> 40,003
+# D02: 40,148 -> 40,002
 # D05: 26,344 -> 26,235
-# D08: 29,523 -> 29,416
+# D08: 29,523 -> 29,412
 # D14: 30,203 -> 30,054 
 # Naive: 30,354 -> 30,261
 
