@@ -127,9 +127,11 @@ Figure 3. Pre-filtering knee plot of cells ranked by total RNA counts. Cells fro
 <div align="center">
 <img src="figures/QC_violin_plot_3.png" width=900" height="450"/>
 <br>
-<b>Figure 4. Post-filtered Violin plots for all QC conditions. </b> Violin plots showing the distribution of detected genes, total counts, mitochondrial, hemoglobin, and ribosomal gene percentages per cell across five sampling times following quality control filtering. Individual cells are shown for percent.hb to highlight the sparse distribution of hemoglobin-expressing cells. Minimal filtering was required, reflecting the high baseline quality of the dataset.
+<b>Figure 4. Post-filtered Violin plots for all QC conditions. </b> Violin plots showing the distribution of detected genes, total counts, mitochondrial, hemoglobin, and ribosomal gene percentages per cell across five sampling times following quality control filtering. Individual cells are shown for percent.hb to highlight the sparse distribution of hemoglobin-expressing cells.
 </div>
 
+</br>
+Figure 4. Post-filtering violin plots of key quality control metrics across all five time points Naive, D02, D05, D08, D14. Distributions are shown for all quality control metrics chosen for filtering. Following filtering, all samples show tighter and more consistent distributions across all metrics, with low mitochondrial and hemoglobin percentages and the removal of extreme outliers, confirming the effectiveness of the applied filtering thresholds.
 <br>
 
 ### Single-Cell Analysis 
