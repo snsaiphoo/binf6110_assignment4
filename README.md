@@ -94,6 +94,15 @@ To identify the biological processes associated with the differentially expresse
 Gene symbols were first converted to Entrez IDs using `bitr()` with the mouse annotation database `org.Mm.eg.db`, as this is required for GO enrichment testing. ORA was then performed against the Biological Process (BP) ontology, which captures the higher-level biological processes that genes are involved in. The top 10 enriched GO terms were visualized as dot plots for each cell type.
 
 ## Results
+### Quality Control 
+
+<div align="center">
+
+<img src="figures/QC_violin_plot_1.png" width="600"/>
+<br>
+<b>Figure X.</b> Violin Plot
+</div>
+<br>
 
 ## Discussion 
 
