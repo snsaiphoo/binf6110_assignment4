@@ -36,13 +36,13 @@ Multiple vignettes were consulted to determine appropriate preprocessing methods
 
 Metrics were visualized using violin plots and a knee plot to inform threshold selection. The following filtering criteria were applied:
 
-- `nFeature_RNA` between 500 and 4,000
+- `nFeature_RNA` between 500 and 3,800
 - `nCount_RNA` between 1,000 and 10,000
 - `percent.mt` below 15%
 - `percent.hb` below 5%
 - `percent.ribo` below 50%
 
-Filtering removed 603 cells (0.39%) from the original 156,572, indicating the dataset was already of high quality prior to filtering. Post-filtering cell counts per condition were as follows: Naive: 30,261; D02: 40,003; D05: 26,235; D08: 29,416; D14: 30,054.
+Filtering removed 606 cells (0.39%) from the original 156,572, indicating the dataset was already of high quality prior to filtering. Post-filtering cell counts per condition were as follows: Naive: 30,261; D02: 40,002; D05: 26,235; D08: 29,412; D14: 30,054.
 
 #### 2.2 - Normalization and Selecting Highly Variable Genes
 Following filtering, gene expression counts were normalized using log normalization via `NormalizeData()`, which scales each cell to a total count of 10,000 before applying a log transformation. Highly variable genes (HVGs) were then identified using `FindVariableFeatures()` with the variance-stabilizing transformation (VST) method, selecting the top 2,000 most variable genes for downstream analysis. The data was subsequently scaled using `ScaleData()` to ensure equal contribution of each gene during dimensionality reduction [16].
