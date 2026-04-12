@@ -134,6 +134,19 @@ Figure 3. Pre-filtering knee plot of cells ranked by total RNA counts. Cells fro
 Figure 4. Post-filtering violin plots of key quality control metrics across all five time points Naive, D02, D05, D08, D14. Distributions are shown for all quality control metrics chosen for filtering. Following filtering, all samples show tighter and more consistent distributions across all metrics, with low mitochondrial and hemoglobin percentages and the removal of extreme outliers, confirming the effectiveness of the applied filtering thresholds.
 <br>
 
+<div align="center">
+<b>Table 1.</b> Pre- and post-filtering cell counts per condition.
+
+| Condition | Pre-filtering | Post-filtering | Cells Removed | % Removed |
+|-----------|--------------|----------------|---------------|-----------|
+| D02 | 40,148 | 40,002 | 146 | 0.36% |
+| D05 | 26,344 | 26,235 | 109 | 0.41% |
+| D08 | 29,523 | 29,414 | 109 | 0.37% |
+| D14 | 30,203 | 30,054 | 149 | 0.49% |
+| Naive | 30,354 | 30,261 | 93 | 0.31% |
+| **Total** | **156,572** | **155,966** | **606** | **0.39%** |
+</div>
+
 ### Single-Cell Analysis 
 <br>
 
