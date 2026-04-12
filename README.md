@@ -157,7 +157,7 @@ Figure 4. Post-filtering violin plots of key quality control metrics across all 
 </div>
 
 <br>
-Figure 5 displays the elbow plot of the first 50 principal components. The curve shows a gradual decline in standard deviation, beginning to flatten beyond PC 40, suggesting that the majority of meaningful biological variation is captured within the first 40 PCs. Based on this, the first 40 PCs were selected for downstream clustering and dimensionality reduction, which is consistent with the selection made by the original authors [3, 20].
+Following normalization, HVG selection, and scaling, PCA was performed on the scaled HVGs to reduce the dimensionality of the data. Figure 5 displays the elbow plot of the first 50 principal components. The curve shows a gradual decline in standard deviation, beginning to flatten beyond PC 40, suggesting that the majority of meaningful biological variation is captured within the first 40 PCs. Based on this, the first 40 PCs were selected for downstream clustering and dimensionality reduction, which is consistent with the selection made by the original authors [3, 20].
 <br>
 
 <div align="center">
@@ -185,25 +185,31 @@ Figure 6 displays the PC1-PC2 plot, where cells from all five time points are we
 </div>
 
 <br>
-Figure 7 displays UMAP plots across resolutions 0.1 to 0.8, showing an increasing number of clusters with higher resolutions. Figure 8 displays the clustree plot, where increasing random branching at higher resolutions indicated over-clustering, while resolution 0.4 showed stable clusters without any random branches. Based on this, a resolution of 0.4 was selected as the point where clusters were stable and biologically interpretable. The original authors used a higher resolution of 0.6, however this was supported by multiple rounds of filtering that produced a more refined dataset [3, 20]. Given that this analysis used a single filtering round, a more conservative resolution of 0.4 was chosen.
+UMAP is a dimensionality reduction method that captures non-linear patterns of variation, allowing for the visualization of complex cell population structure. Following the construction of the SNN graph using the first 40 PCs, clustering was performed and visualized using UMAP. Figure 7 displays UMAP plots across resolutions 0.1 to 0.8, showing an increasing number of clusters with higher resolutions. Figure 8 displays the clustree plot, where increasing random branching at higher resolutions indicated over-clustering, while resolution 0.4 showed stable clusters without any random branches. Based on this, a resolution of 0.4 was selected as the point where clusters were stable and biologically interpretable. The original authors used a higher resolution of 0.6, however this was supported by multiple rounds of filtering that produced a more refined dataset [3, 20]. Given that this analysis used a single filtering round, a more conservative resolution of 0.4 was chosen
 <br>
 </br>
 
 <div align="center">
 <img src="figures/umap_batch.png" width=600" height="500"/>
 <br>
-<b>Figure 9. UMAP colored by mouse and tissue identity. </b> Clustree diagram showing cluster stability across resolutions. </b> UMAP visualization of all cells colored by individual mouse, tissue type (ET, RT, Sinus), and timepoint (Naïve, D02, D05, D08, D14). Cells from all three mice and conditions intermix throughout the UMAP without forming sample-specific clusters, indicating no substantial batch effects. This justified the decision to proceed without batch correction.
+<b>Figure 9. UMAP colored by mouse and tissue identity. </b> Clustree diagram showing cluster stability across resolutions. </b> UMAP visualization of all cells colored by individual mouse, tissue type (ET, RT, Sinus), and timepoint (Naïve, D02, D05, D08, D14).
 </div>
 
 <br>
+Figure 9 confirms minimal batch effects, as cells from all three mice and conditions are well mixed throughout the UMAP rather than clustering by sample identity, justifying the decision to proceed without batch correction.
+<br>
+</br>
 
 <div align="center">
 <img src="figures/umap_cluster_tissue.png" width=700" height="500"/>
 <br>
-<b>Figure 10. UMAP visualization of cell clusters and tissue type distribution. </b> UMAP plots showing all cells colored by cluster identity (left, 38 clusters) and tissue type (right; LNG, OM, RM). While some clusters show tissue-specific enrichment, most clusters contain cells from multiple tissue types, suggesting that clustering is driven primarily by cell type rather than tissue of origin.
+<b>Figure 10. UMAP visualization of cell clusters and tissue type distribution. </b> UMAP plots showing all cells colored by cluster identity (left, 38 clusters) and tissue type (right; LNG, OM, RM). 
 </div>
 
 <br>
+Figure 10 displays the base UMAP with 38 clusters alongside the UMAP colored by tissue type (LNG, OM, RM). While some clusters show tissue-specific enrichment, the majority of clusters contain cells from multiple tissue types, suggesting that clustering is primarily driven by cell type rather than tissue of origin. This further supports that the clustering reflects meaningful biological variation rather than technical differences between tissues
+<br>
+</br>
 
 <div align="center">
 <img src="figures/fp_0.png" width=700" height="500"/>
@@ -211,6 +217,8 @@ Figure 7 displays UMAP plots across resolutions 0.1 to 0.8, showing an increasin
 <b>Figure 11. Feature plots of top marker genes used to annotate cluster 0 </b> UMAP feature plots showing normalized expression of the four most significant marker genes for cluster 0 (Ncam2, Gldc, Cidea, and Mdga2). Expression is specifically enriched in a distinct region of the UMAP, supporting the annotation of this cluster as olfactory neurons. This approach was repeated for all major clusters to guide manual cell type annotation.
 </div>
 
+<br>
+Once the optimal resolution of 0.4 was identified, cell type annotation was performed. Both manual and automated annotation were carried out to allow for a comparison between the two approaches. Manual annotation was performed by identifying the top marker genes for each cluster and researching their known biological functions to infer cell type identity. Figure 11 displays an example of this process for cluster 0, showing feature plots of the top four marker genes (Ncam2, Gldc, Cidea, and Mdga2), where expression is specifically enriched in a distinct region of the UMAP, supporting the annotation of this cluster as olfactory neurons. This approach was repeated across all major clusters. 
 <br>
 
 <div align="center">
@@ -221,12 +229,18 @@ Figure 7 displays UMAP plots across resolutions 0.1 to 0.8, showing an increasin
 
 <br>
 
+Figure 12 displays the resulting manually annotated UMAP, where distinct cell populations form well-separated clusters, reflecting the biological diversity of the nasal mucosa. Both immune and structural cell types were successfully identified, along with nasal-specific populations that are characteristic of this tissue. The presence of these cell types is consistent with the three tissue types present in this dataset, being the RM, OM, and LNG.
+
+<br>
+
 <div align="center">
 <img src="figures/umap_singleR.png" width=700" height="500"/>
 <br>
-<b>Figure 13.  UMAP of SingleR automated cell type annotation. </b> UMAP visualization of all cells annotated using SingleR with the mouse immune and general mouse reference datasets, identifying 30 predicted cell types. While major populations such as neurons, macrophages, B cells, T cells, and epithelial cells are consistent with the manual annotation, SingleR predicts additional cell types not expected in nasal tissue (e.g. hepatocytes, oligodendrocytes, adipocytes), highlighting the limitations of reference-based automated annotation. Manual annotation was therefore used to guide final cell type assignments.
+<b>Figure 13.  UMAP of SingleR automated cell type annotation. </b> UMAP visualization of all cells annotated using SingleR with the mouse immune and general mouse reference datasets, identifying 30 predicted cell types.
 </div>
 
+<br>
+Figure 13 displays the SingleR automated annotation, which predicted 30 cell types using the MouseRNAseqData and ImmGenData reference datasets. While several major populations were consistent with the manual annotation, SingleR predicted cell types not expected in nasal tissue such as hepatocytes and adipocytes, likely as a result of the broad MouseRNAseqData reference not accurately reflecting the tissue being studied. As a result, manual annotation was used to guide the final cell type assignments.
 <br>
 
 ### DGE analysis
