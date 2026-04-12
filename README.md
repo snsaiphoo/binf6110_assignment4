@@ -279,6 +279,15 @@ Figure 13 displays the SingleR automated annotation, which predicted 27 cell typ
 
 <br>
 
+Following cell type annotation, differential gene expression analysis was performed comparing cells at D05 and D14. Gene expression counts were first aggregated across cells within each combination of time point, mouse ID, and cell type using AggregateExpression(), performing the analysis at the level of biological replicates rather than individual cells to give more reliable results. DGE was then tested using FindMarkers() with DESeq2 as the statistical test, where positive log2 fold-change values reflect genes upregulated at D14 and negative values reflect genes upregulated at D05, filtered using an adjusted p-value threshold of 0.05.
+
+Figures 14 and 15 display the heatmaps of the top differentially expressed genes in macrophages and neutrophils between D05 and D14, respectively. In both cell types, interferon-related genes showed higher expression at D05, while distinct gene sets were elevated at D14. The transcriptional differences between time points were more pronounced in macrophages compared to neutrophils.
+
+Figure 16 displays the feature plots of _Isg15_ and _Hes1_ in macrophages across all five time points, where Isg15 expression is notably elevated at D05 and declines by D14, while _Hes1_ expression remains relatively stable into D14. Figure 17 displays the feature plots of _Phf11d_ and _Hk2_ in neutrophils across all five time points, where _Phf11d_ expression appears elevated at D05 and declines by D14, while _Hk2_ expression remains more broadly distributed across all time points.
+
+<br>
+
+
 ### Over-representation analysis (ORA)
 <br>
 
