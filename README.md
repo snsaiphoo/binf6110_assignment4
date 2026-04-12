@@ -148,6 +148,16 @@ Gene symbols were first converted to Entrez IDs using `bitr()` with the mouse an
 
 <br>
 
+<br>
+
+<div align="center">
+<img src="figures/umap_resolutions.png" width=600" height="500"/>
+<br>
+<b>Figure X. Clustering resolution comparison for UMAPs. </b> UMAP visualizations of cells clustered at resolutions 0.1 through 0.8, yielding 22 to 53 clusters respectively. Increasing resolution results in progressive subdivision of cell populations. These plots were used to identify an optimal clustering resolution that balances biological interpretability with sufficient granularity for downstream cell type annotation.
+</div>
+
+<br>
+
 ## Discussion 
 
 ## References
