@@ -95,13 +95,20 @@ Gene symbols were first converted to Entrez IDs using `bitr()` with the mouse an
 
 ## Results
 ### Quality Control 
-
 <div align="center">
-
 <img src="figures/QC_violin_plot_1.png" width="600"/>
 <br>
-<b>Figure X.</b> Violin Plot
+<b>Figure X. Pre-filtered Violin plots for nFeature_RNA and nCount_RNA. </b> Violin plots showing the number of detected genes (nFeature_RNA, left) and total counts (nCount_RNA, right) per cell across five samples prior to filtering. Distributions are consistent across all samples, reflecting high baseline data quality.
 </div>
+
+<br>
+
+<div align="center">
+<img src="figures/QC_violin_plot_2.png" width="600"/>
+<br>
+<b>Figure X. Pre-filtered Violin plots for mitochondrial, ribosomal, and hemoglobin gene percentages. </b> Violin plots showing the percentage of mitochondrial (percent.mt, left), ribosomal (percent.ribo, middle), and hemoglobin (percent.hb, right) gene counts per cell across five samples prior to filtering. The majority of cells show low mitochondrial and hemoglobin percentages, with rare extreme outliers. Cells were filtered at thresholds of <15% mitochondrial, <50% ribosomal, and <5% hemoglobin reads.
+</div>
+
 <br>
 
 ## Discussion 
