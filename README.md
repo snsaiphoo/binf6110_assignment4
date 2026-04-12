@@ -236,11 +236,11 @@ Figure 12 displays the resulting manually annotated UMAP, where distinct cell po
 <div align="center">
 <img src="figures/umap_singleR.png" width=700" height="500"/>
 <br>
-<b>Figure 13.  UMAP of SingleR automated cell type annotation. </b> UMAP visualization of all cells annotated using SingleR with the mouse immune and general mouse reference datasets, identifying 30 predicted cell types.
+<b>Figure 13.  UMAP of SingleR automated cell type annotation. </b> UMAP visualization of all cells annotated using SingleR with the mouse immune and general mouse reference datasets, identifying 27 predicted cell types.
 </div>
 
 <br>
-Figure 13 displays the SingleR automated annotation, which predicted 30 cell types using the MouseRNAseqData and ImmGenData reference datasets. While several major populations were consistent with the manual annotation, SingleR predicted cell types not expected in nasal tissue such as hepatocytes and adipocytes, likely as a result of the broad MouseRNAseqData reference not accurately reflecting the tissue being studied. As a result, manual annotation was used to guide the final cell type assignments.
+Figure 13 displays the SingleR automated annotation, which predicted 27 cell types using the MouseRNAseqData and ImmGenData reference datasets. While several major populations were consistent with the manual annotation, SingleR predicted cell types not expected in nasal tissue such as hepatocytes and adipocytes, likely as a result of the broad MouseRNAseqData reference not accurately reflecting the tissue being studied. As a result, manual annotation was used to guide the final cell type assignments.
 <br>
 
 ### DGE analysis
