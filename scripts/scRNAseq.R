@@ -9,7 +9,7 @@ library(DESeq2)
 library(pheatmap)
 library(clusterProfiler)
 library(org.Mm.eg.db)
-
+library(BiocParallel)
 
 # load in Seurat object 
 nasal <- readRDS("../seurat_ass4.rds")
@@ -78,7 +78,7 @@ ggsave(
 # Based on QC plots:
 # nFeature_RNA: remove low-quality cells (<500) and likely doublets (>4000)
 # nCount_RNA: remove near-empty droplets (<1000) and outlier high-count cells (>10000)
-# percent.mt: <15% threshold, slightly lenient for infection context
+# percent.mt: <15% threshold, to account for infection and based on violin plots
 # percent.hb: <5% to remove rare RBC-contaminated cells
 # percent.ribo: <50% to exclude extreme ribosomal outliers 
 
@@ -106,8 +106,13 @@ ggsave(
 )
 
 # QC Results
+<<<<<<< HEAD
 # Filtering removed 606 cells (0.39%) from 156,572 total, low removal rate
 # confirming data was already high quality prior to filtering.
+=======
+# Filtering removed 603 cells (0.39%) from 156,572 total, low removal rate
+# confirming data was already high quality
+>>>>>>> 21b42be001d4e24744812f85749cef000021b2cb
 # Pre vs Post filtering cell counts
 # D02: 40,148 -> 40,002
 # D05: 26,344 -> 26,235
@@ -152,9 +157,9 @@ pca <- DimPlot(nasal, reduction = "pca") + ggtitle("PC1-PC2") +
     plot.title = element_text(hjust = 0.7)  # center the title
   )
 
-# PCA shows clear structure with cells forming distinct branches, suggesting
-# underlying biological heterogeneity. Samples are well mixed across the space,
-# indicating minimal batch effects and that variation is driven by biology.
+# PCA shows clear structure with cells forming distinct branches, 
+# suggesting meaningful patterns of variation were captured 
+# also indicating minimal batch effects and that variation is driven by biology.
 
 ggsave(
   filename = "../figures/pca_plot.png",
@@ -396,8 +401,6 @@ ref_mouse <- MouseRNAseqData()
 
 ref_immune  <- ImmGenData()
 
-library(BiocParallel)
-
 param <- SnowParam(workers = 4, type = "SOCK") 
 
 pred <- SingleR(
@@ -496,12 +499,12 @@ levels(Idents(pseudo_nasal))
 # Plotting heatmap function
 plot_heatmap <- function(de_results, celltype_name, pseudo_obj, top_n = 10) {
 
-  # Filter for significant genes (p < 0.05)
+  # Filter for significant genes (padj < 0.05)
   sig_res <- de_results %>% 
     filter(p_val_adj < 0.05)
   
   if (nrow(sig_res) < 2) {
-    message(paste(celltype_name, "- no significant genes found."))
+    print(paste(celltype_name, "- no significant genes found."))
     return(NULL)
   }
   
