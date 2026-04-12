@@ -138,15 +138,11 @@ Gene symbols were first converted to Entrez IDs using `bitr()` with the mouse an
 
 <br>
 
-<br>
-
 <div align="center">
 <img src="figures/pca_plot.png" width=600" height="500"/>
 <br>
 <b>Figure X. PC1-PC2 plot of cells across all samples. </b> Scatter plot of cells projected onto the first two principal components (PC1: 11.2%, PC2: 9.8%), colored by sample identity. Cells from all five samples intermix across the principal component space, suggesting no strong sample-specific batch effects. The distinct arms visible in the plot likely reflect major cell populations present across all samples.
 </div>
-
-<br>
 
 <br>
 
@@ -157,6 +153,102 @@ Gene symbols were first converted to Entrez IDs using `bitr()` with the mouse an
 </div>
 
 <br>
+
+<div align="center">
+<img src="figures/cluster_tree.png" width=600" height="500"/>
+<br>
+<b>Figure X. Clustree diagram showing cluster stability across resolutions. </b> Clustree plot displaying how clusters evolve across resolutions 0.1 to 0.8. The optimal resolution was selected at the point where clusters remain stable with few spurious branching events, balancing cluster granularity with interpretability.
+</div>
+
+<br>
+
+<div align="center">
+<img src="figures/umap_batch.png" width=600" height="500"/>
+<br>
+<b>Figure X. UMAP colored by mouse and tissue identity. </b> Clustree diagram showing cluster stability across resolutions. </b> UMAP visualization of all cells colored by individual mouse, tissue type (ET, RT, Sinus), and timepoint (Naïve, D02, D05, D08, D14). Cells from all three mice and conditions intermix throughout the UMAP without forming sample-specific clusters, indicating no substantial batch effects. This justified the decision to proceed without batch correction.
+</div>
+
+<br>
+
+<div align="center">
+<img src="figures/umap_cluster_tissue.png" width=700" height="500"/>
+<br>
+<b>Figure X. UMAP visualization of cell clusters and tissue type distribution. </b> UMAP plots showing all cells colored by cluster identity (left, 38 clusters) and tissue type (right; LNG, OM, RM). While some clusters show tissue-specific enrichment, most clusters contain cells from multiple tissue types, suggesting that clustering is driven primarily by cell type rather than tissue of origin.
+</div>
+
+<br>
+
+<div align="center">
+<img src="figures/fp_0.png" width=700" height="500"/>
+<br>
+<b>Figure X. Feature plots of top marker genes used to annotate cluster 0 </b> UMAP feature plots showing normalized expression of the four most significant marker genes for cluster 0 (Ncam2, Gldc, Cidea, and Mdga2). Expression is specifically enriched in a distinct region of the UMAP, supporting the annotation of this cluster as olfactory neurons. This approach was repeated for all major clusters to guide manual cell type annotation.
+</div>
+
+<br>
+
+<div align="center">
+<img src="figures/umap_manual_annotations.png" width=700" height="500"/>
+<br>
+<b>Figure X. UMAP of manually annotated cell types. </b> UMAP visualization of all cells following manual annotation, identifying 14 distinct cell populations including immune cells (neutrophils, macrophages, monocytes, dendritic cells, T cells, NK cells, B cells), structural cells (endothelial, fibroblasts, pericytes, basal cells), and nasal-specific cell types (olfactory neurons, sustenacular cells). Cell type identity was assigned based on known marker gene expression. Unresolved clusters are labeled as "Other."
+</div>
+
+<br>
+
+<div align="center">
+<img src="figures/umap_singleR.png" width=700" height="500"/>
+<br>
+<b>Figure X.  UMAP of SingleR automated cell type annotation. </b> UMAP visualization of all cells annotated using SingleR with the mouse immune and general mouse reference datasets, identifying 30 predicted cell types. While major populations such as neurons, macrophages, B cells, T cells, and epithelial cells are consistent with the manual annotation, SingleR predicts additional cell types not expected in nasal tissue (e.g. hepatocytes, oligodendrocytes, adipocytes), highlighting the limitations of reference-based automated annotation. Manual annotation was therefore used to guide final cell type assignments.
+</div>
+
+<br>
+
+### DGE analysis
+
+<br>
+
+<div align="center">
+<img src="figures/macrophages_DE_heatmap.png" width=600" height="600"/>
+<br>
+<b>Figure X.  Heatmap of differentially expressed genes in macrophages between DPI 5 and DPI 14. </b> Heatmap showing scaled expression of the top differentially expressed genes in macrophages at day 5 (teal) and day 14 (pink) post-infection. Interferon-stimulated genes (Ifit2, Rsad2, Isg15, Irf7) are enriched at DPI 5, while heat shock and regulatory genes (Hspa1a, Hspa1b, Hes1) are more prominent at DPI 14, suggesting a shift from an acute antiviral to a more regulatory macrophage response over time.
+</div>
+
+<br>
+
+<div align="center">
+<img src="figures/neutrophils_DE_heatmap.png" width=600" height="600"/>
+<br>
+<b>Figure X.  Heatmap of differentially expressed genes in neutrophils between DPI 5 and DPI 14. </b> Heatmap showing scaled expression of the top differentially expressed genes in neutrophils at day 5 (teal) and day 14 (pink) post-infection. Some interferon-related genes (Ifi211, Bst2) show higher expression at DPI 5, while metabolic genes (Ndufv3, Ndufa3) are modestly elevated at DPI 14, though the overall transcriptional differences between timepoints are less pronounced than those observed in macrophages.
+</div>
+
+<br>
+
+<div align="center">
+<img src="figures/fp_I_H_comparison.png" width=800" height="400"/>
+<br>
+<b>Figure X.  Feature plots of Isg15 and Hes1 expression across timepoints in macrophages. </b> UMAP feature plots showing expression of Isg15 (top) and Hes1 (bottom) across all five timepoints (D02, D05, D08, D14, Naïve). Isg15 expression is notably elevated at D05 and declines by D14, consistent with an early antiviral interferon response. Hes1 expression appears more broadly distributed across timepoints, with relatively stable expression into D14, supporting its role in the later regulatory macrophage state identified in the heatmap analysis.
+</div>
+
+<br>
+
+<div align="center">
+<img src="figures/fp_neutro_comp.png" width=800" height="400"/>
+<br>
+<b>Figure X.  Feature plots of Phf11d and Hk2 expression across timepoints in neutrophils. </b> UMAP feature plots showing expression of Phf11d (top) and Hk2 (bottom) across all five timepoints (D02, D05, D08, D14, Naïve). Phf11d expression appears elevated at D05 and declines by D14, consistent with an early immune activation response. Hk2 expression is more broadly distributed across timepoints with less pronounced temporal changes, reflecting the more modest transcriptional differences observed in neutrophils compared to macrophages.
+</div>
+
+<br>
+
+### Over-representation analysis (ORA)
+<br>
+
+<div align="center">
+<img src="figures/macrophages_final_GO.png" width=600" height="700"/>
+<br>
+<b>Figure X.  Gene Ontology (GO) ORA of macrophage pathways at DPI 14 versus DPI 5. </b> Dot plot showing GO biological pathways significantly enriched in macrophages at DPI 14 compared to DPI 5. Dot size represents the number of genes in each pathway and color indicates statistical significance. TNF response pathways are the most strongly enriched, alongside pathways related to protein stress responses and cell survival, suggesting macrophages remain actively engaged in inflammatory signaling and stress management during the resolution phase of infection.
+</div>
+
+<br>
+
 
 ## Discussion 
 
