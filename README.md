@@ -42,13 +42,11 @@ Metrics were visualized using violin plots and a knee plot to inform threshold s
 - `percent.hb` below 5%
 - `percent.ribo` below 50%
 
-Filtering removed 606 cells (0.39%) from the original 156,572, indicating the dataset was already of high quality prior to filtering. Post-filtering cell counts per condition were as follows: Naive: 30,261; D02: 40,002; D05: 26,235; D08: 29,412; D14: 30,054.
-
 #### 2.2 - Normalization and Selecting Highly Variable Genes
 Following filtering, gene expression counts were normalized using log normalization via `NormalizeData()`, which scales each cell to a total count of 10,000 before applying a log transformation. Highly variable genes (HVGs) were then identified using `FindVariableFeatures()` with the variance-stabilizing transformation (VST) method, selecting the top 2,000 most variable genes for downstream analysis. The data was subsequently scaled using `ScaleData()` to ensure equal contribution of each gene during dimensionality reduction [16].
 
 #### 2.3 - Dimensionality Reduction with PCA
-Dimensionality reduction is a necessary step in scRNA-seq analysis, as this data is extremely high-dimensional. The reduction makes the data more manageable to work with and reveals the underlying biological structure [16]. Principal component analysis (PCA) is a dimensionality reduction method that captures linear variation in the data. PCA was performed on the scaled HVGs using RunPCA(), reducing the data to a lower-dimensional representation. After, an elbow plot was generated to determine how many principal components (PCs) captured meaningful variation. The goal is to use the fewest PCs that capture the most variation for downstream analysis. The resulting PCA plot showed a clear structure, with cells forming distinct branches, and samples were well mixed across the PCA space, suggesting minimal batch effects and that biological variation was the primary driver of the observed structure.
+Dimensionality reduction is a necessary step in scRNA-seq analysis, as this data is extremely high-dimensional. The reduction makes the data more manageable to work with and reveals the underlying biological structure [16]. Principal component analysis (PCA) is a dimensionality reduction method that captures linear variation in the data. PCA was performed on the scaled HVGs using RunPCA(), reducing the data to a lower-dimensional representation. After, an elbow plot was generated to determine how many principal components (PCs) captured meaningful variation. The goal is to use the fewest PCs that capture the most variation for downstream analysis. 
 
 ### 3.0 - Clustering and UMAP
 
@@ -59,7 +57,7 @@ A shared nearest neighbour (SNN) graph was constructed using `FindNeighbors()` b
 Clustering was performed using `FindClusters()` across a range of resolutions (0.1 to 0.8) to identify the optimal granularity of clusters [19]. To determine the most appropriate resolution, the clustree package was used to visualize cluster stability across resolutions, as outlined in a scRNA-seq clustering tutorial [19]. The clustree plot was evaluated at each resolution to identify the point at which clusters remained stable without producing an excessive number of random branches, indicating over-clustering. A resolution of 0.4 was selected based on this assessment, as it represented the point where cluster structure was stable and biologically interpretable. UMAP was then run using `RunUMAP()` on the first 40 PCs to produce the final visualization. It should also be noted that the original authors also used 40 PCs for their downstream analysis, along with a higher resolution of 0.6, which was supported by multiple rounds of filtering that produced a more refined dataset [3, 20].
 
 #### 3.3 - Checking for Batch Effects
-Batch effects were assessed by visualizing the UMAP coloured by `mouse_id`. Cells from all conditions were well mixed within clusters, indicating minimal batch effects. No batch correction was therefore applied. UMAP plots were additionally generated coloured by tissue type to examine whether clustering reflected tissue of origin or broader biological variation.
+Batch effects were assessed by visualizing the UMAP coloured by `mouse_id`. UMAP plots were additionally generated, coloured by tissue type to examine whether clustering reflected tissue of origin or broader biological variation.
 
 ### 4.0 - Cell Type Annotation
 
@@ -102,13 +100,17 @@ Gene symbols were first converted to Entrez IDs using `bitr()` with the mouse an
 </div>
 
 <br>
+Violin plots were used to evaluate the quality of the data in the provided Seurat object. Figure 1 demonstrates the distributions of nFeature_RNA and nCount_RNA, which are the number of detected genes and the total RNA counts per cell across the five time points. These violin plots show a decent distribution across all samples. The filtering thresholds based on this plot were set to nFeature_RNA between 500 and 3,800 and nCount_RNA between 1,000 and 10,000. The nFeature_RNA threshold was chosen to cut off the lower tail while retaining the upper range. The nCount_RNA threshold was chosen to preserve the majority of cells while still capturing the variation in the upper tails across the different time points.
+</br>
 
 <div align="center">
 <img src="figures/QC_violin_plot_2.png" width="600"/>
 <br>
-<b>Figure 2. Pre-filtered Violin plots for mitochondrial, ribosomal, and hemoglobin gene percentages. </b> Violin plots showing the percentage of mitochondrial (percent.mt, left), ribosomal (percent.ribo, middle), and hemoglobin (percent.hb, right) gene counts per cell across five samples prior to filtering. Individual cells are shown for percent.hb to highlight the sparse distribution of hemoglobin-expressing cells. The majority of cells show low mitochondrial and hemoglobin percentages, with rare extreme outliers. Cells were filtered at thresholds of <15% mitochondrial, <50% ribosomal, and <5% hemoglobin reads.
+<b>Figure 2. Pre-filtered Violin plots for mitochondrial, ribosomal, and hemoglobin gene percentages. </b> Violin plots showing the percentage of mitochondrial (percent.mt, left), ribosomal (percent.ribo, middle), and hemoglobin (percent.hb, right) gene counts per cell across five samples prior to filtering. Individual cells are shown for percent.hb to highlight the sparse distribution of hemoglobin-expressing cells.
 </div>
 
+<br>
+Figure 2 shows the distributions of mitochondrial, ribosomal, and hemoglobin gene percentages across all five time points. High proportions of these genes can introduce noise into the biological signal [18]. The majority of cells showed low mitochondrial and hemoglobin percentages, with only rare extreme outliers. To reduce this noise, cells were filtered at thresholds of less than 15% mitochondrial, less than 50% ribosomal, and less than 5% hemoglobin reads [18]. Both figures demonstrate a relatively clean distribution, suggesting that only minor filtering would be required. 
 <br>
 
 <div align="center">
