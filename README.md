@@ -116,9 +116,12 @@ Figure 2 shows the distributions of mitochondrial, ribosomal, and hemoglobin gen
 <div align="center">
 <img src="figures/QC_knee_plot.png" width="400" height="400"/>
 <br>
-<b>Figure 3. Pre-filtered Knee plot for cell rankings by total counts. </b> Cells from all five samples ranked by total count (log10 nCount_RNA). The gradual, consistent decline across all samples indicates that the vast majority of detected cells are of high quality, with no clear separation between real cells and empty droplets. This supported the use of minimal filtering thresholds to retain as many high-quality cells as possible.
+<b>Figure 3. Pre-filtering knee plot of cells ranked by total RNA counts. </b> Cells from all five time points (Naive, D02, D05, D08, D14) are ranked by total count (log10 nCount_RNA). The gradual and consistent decline across all samples indicates that the vast majority of cells are of high quality, supporting the use of minimal filtering thresholds
 </div>
 
+<br>
+Figure 3. Pre-filtering knee plot of cells ranked by total RNA counts. Cells from all five time points (Naive, D02, D05, D08, D14) are ranked from highest to lowest total RNA count (log10 nCount_RNA). The curve shows a clear inflection point early in the distribution, where all five samples converge at high nCount_RNA values before gradually declining. This gradual decline rather than a sharp drop off suggests that the majority of detected cells are real, high quality cells with no obvious contamination from empty droplets. Overall, this supported the filtering thresholds chosen from the violin plots and confirmed that the dataset required only minimal filtering.
+</br>
 <br>
 
 <div align="center">
