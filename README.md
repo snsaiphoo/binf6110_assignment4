@@ -192,7 +192,7 @@ UMAP is a dimensionality reduction method that captures non-linear patterns of v
 <div align="center">
 <img src="figures/umap_batch.png" width=600" height="500"/>
 <br>
-<b>Figure 9. UMAP colored by mouse and tissue identity. </b> Clustree diagram showing cluster stability across resolutions. </b> UMAP visualization of all cells colored by individual mouse, tissue type (ET, RT, Sinus), and timepoint (Naïve, D02, D05, D08, D14).
+<b>Figure 9. UMAP colored by mouse and tissue identity. </b> Clustree diagram showing cluster stability across resolutions. </b> UMAP visualization of all cells colored by individual mouse, tissue type (ET, RT, Sinus), and timepoint (Naive, D02, D05, D08, D14).
 </div>
 
 <br>
@@ -214,11 +214,11 @@ Figure 10 displays the base UMAP with 38 clusters alongside the UMAP colored by 
 <div align="center">
 <img src="figures/fp_0.png" width=700" height="500"/>
 <br>
-<b>Figure 11. Feature plots of top marker genes used to annotate cluster 0 </b> UMAP feature plots showing normalized expression of the four most significant marker genes for cluster 0 (Ncam2, Gldc, Cidea, and Mdga2). Expression is specifically enriched in a distinct region of the UMAP, supporting the annotation of this cluster as olfactory neurons. This approach was repeated for all major clusters to guide manual cell type annotation.
+<b>Figure 11. Feature plots of top marker genes used to annotate cluster 0.</b> UMAP feature plots showing normalized expression of the four most significant marker genes for cluster 0 (<i>Ncam2</i>, <i>Gldc</i>, <i>Cidea</i>, and <i>Mdga2</i>). Expression is specifically enriched in a distinct region of the UMAP, supporting the annotation of this cluster as olfactory neurons. This approach was repeated for all major clusters to guide manual cell type annotation.
 </div>
 
 <br>
-Once the optimal resolution of 0.4 was identified, cell type annotation was performed. Both manual and automated annotation were carried out to allow for a comparison between the two approaches. Manual annotation was performed by identifying the top marker genes for each cluster and researching their known biological functions to infer cell type identity. Figure 11 displays an example of this process for cluster 0, showing feature plots of the top four marker genes (Ncam2, Gldc, Cidea, and Mdga2), where expression is specifically enriched in a distinct region of the UMAP, supporting the annotation of this cluster as olfactory neurons. This approach was repeated across all major clusters. 
+Once the optimal resolution of 0.4 was identified, cell type annotation was performed. Both manual and automated annotation were carried out to allow for a comparison between the two approaches. Manual annotation was performed by identifying the top marker genes for each cluster and researching their known biological functions to infer cell type identity. Figure 11 displays an example of this process for cluster 0, showing feature plots of the top four marker genes (<i>Ncam2</i>, <i>Gldc</i>, <i>Cidea</i>, and <i>Mdga2</i>), where expression is specifically enriched in a distinct region of the UMAP, supporting the annotation of this cluster as olfactory neurons. This approach was repeated across all major clusters.
 <br>
 
 <div align="center">
@@ -250,23 +250,21 @@ Figure 13 displays the SingleR automated annotation, which predicted 27 cell typ
 <div align="center">
 <img src="figures/macrophages_DE_heatmap.png" width=600" height="600"/>
 <br>
-<b>Figure 14.  Heatmap of differentially expressed genes in macrophages between DPI 5 and DPI 14. </b> Heatmap showing scaled expression of the top differentially expressed genes in macrophages at day 5 (teal) and day 14 (pink) post-infection. Interferon-stimulated genes (Ifit2, Rsad2, Isg15, Irf7) are enriched at DPI 5, while heat shock and regulatory genes (Hspa1a, Hspa1b, Hes1) are more prominent at DPI 14, suggesting a shift from an acute antiviral to a more regulatory macrophage response over time.
+<b>Figure 14. Heatmap of differentially expressed genes in macrophages between DPI 5 and DPI 14.</b> Heatmap showing scaled expression of the top differentially expressed genes in macrophages at day 5 (teal) and day 14 (pink) post-infection. Interferon-stimulated genes (<i>Ifit2</i>, <i>Rsad2</i>, <i>Isg15</i>, <i>Irf7</i>) are enriched at DPI 5, while heat shock and regulatory genes (<i>Hspa1a</i>, <i>Hspa1b</i>, <i>Hes1</i>) are more prominent at DPI 14.
 </div>
-
 <br>
 
 <div align="center">
 <img src="figures/neutrophils_DE_heatmap.png" width=600" height="600"/>
 <br>
-<b>Figure 15.  Heatmap of differentially expressed genes in neutrophils between DPI 5 and DPI 14. </b> Heatmap showing scaled expression of the top differentially expressed genes in neutrophils at day 5 (teal) and day 14 (pink) post-infection. Some interferon-related genes (Ifi211, Bst2) show higher expression at DPI 5, while metabolic genes (Ndufv3, Ndufa3) are modestly elevated at DPI 14, though the overall transcriptional differences between timepoints are less pronounced than those observed in macrophages.
+<b>Figure 15. Heatmap of differentially expressed genes in neutrophils between DPI 5 and DPI 14.</b> Heatmap showing scaled expression of the top differentially expressed genes in neutrophils at day 5 (teal) and day 14 (pink) post-infection. Some interferon-related genes (<i>Ifi211</i>, <i>Bst2</i>) show higher expression at DPI 5, while metabolic genes (<i>Ndufv3</i>, <i>Ndufa3</i>) are modestly elevated at DPI 14, though the overall transcriptional differences between timepoints are less pronounced than those observed in macrophages.
 </div>
-
 <br>
 
 <div align="center">
 <img src="figures/fp_I_H_comparison.png" width=800" height="400"/>
 <br>
-<b>Figure 16.  Feature plots of Isg15 and Hes1 expression across timepoints in macrophages. </b> UMAP feature plots showing expression of Isg15 (top) and Hes1 (bottom) across all five timepoints (D02, D05, D08, D14, Naïve). Isg15 expression is notably elevated at D05 and declines by D14, consistent with an early antiviral interferon response. Hes1 expression appears more broadly distributed across timepoints, with relatively stable expression into D14, supporting its role in the later regulatory macrophage state identified in the heatmap analysis.
+<b>Figure 16. Feature plots of <i>Isg15</i> and <i>Hes1</i> expression across timepoints in macrophages.</b> UMAP feature plots showing expression of <i>Isg15</i> (top) and <i>Hes1</i> (bottom) across all five timepoints (D02, D05, D08, D14, Naive). <i>Isg15</i> expression is notably elevated at D05 and declines by D14, consistent with an early antiviral interferon response. <i>Hes1</i> expression appears more broadly distributed across timepoints, with relatively stable expression into D14.
 </div>
 
 <br>
@@ -274,7 +272,7 @@ Figure 13 displays the SingleR automated annotation, which predicted 27 cell typ
 <div align="center">
 <img src="figures/fp_neutro_comp.png" width=800" height="400"/>
 <br>
-<b>Figure 17.  Feature plots of Phf11d and Hk2 expression across timepoints in neutrophils. </b> UMAP feature plots showing expression of Phf11d (top) and Hk2 (bottom) across all five timepoints (D02, D05, D08, D14, Naïve). Phf11d expression appears elevated at D05 and declines by D14, consistent with an early immune activation response. Hk2 expression is more broadly distributed across timepoints with less pronounced temporal changes, reflecting the more modest transcriptional differences observed in neutrophils compared to macrophages.
+<b>Figure 17. Feature plots of <i>Phf11d</i> and <i>Hk2</i> expression across timepoints in neutrophils.</b> UMAP feature plots showing expression of <i>Phf11d</i> (top) and <i>Hk2</i> (bottom) across all five timepoints (D02, D05, D08, D14, Naive). <i>Phf11d</i> expression appears elevated at D05 and declines by D14, consistent with an early immune activation response. <i>Hk2</i> expression is more broadly distributed across timepoints with less pronounced temporal changes, reflecting the more modest transcriptional differences observed in neutrophils compared to macrophages.
 </div>
 
 <br>
@@ -284,9 +282,6 @@ Following cell type annotation, differential gene expression analysis was perfor
 Figures 14 and 15 display the heatmaps of the top differentially expressed genes in macrophages and neutrophils between D05 and D14, respectively. In both cell types, interferon-related genes showed higher expression at D05, while distinct gene sets were elevated at D14. The transcriptional differences between time points were more pronounced in macrophages compared to neutrophils.
 
 Figure 16 displays the feature plots of _Isg15_ and _Hes1_ in macrophages across all five time points, where Isg15 expression is notably elevated at D05 and declines by D14, while _Hes1_ expression remains relatively stable into D14. Figure 17 displays the feature plots of _Phf11d_ and _Hk2_ in neutrophils across all five time points, where _Phf11d_ expression appears elevated at D05 and declines by D14, while _Hk2_ expression remains more broadly distributed across all time points.
-
-<br>
-
 
 ### Over-representation analysis (ORA)
 <br>
@@ -300,8 +295,6 @@ Figure 16 displays the feature plots of _Isg15_ and _Hes1_ in macrophages across
 <br>
 
 Figure 18 displays the GO ORA dot plot for macrophages at D14 compared to D05. The most significantly enriched pathways include cellular response to tumor necrosis factor and response to tumor necrosis factor, which show the highest gene ratios and lowest adjusted p-values. Additional enriched pathways include those related to protein stress responses such as endoplasmic reticulum unfolded protein response and response to unfolded protein, as well as pathways involved in the negative regulation of apoptotic signaling.
-
-<br>
 
 ## Discussion 
 
