@@ -144,8 +144,8 @@ elbow <- ElbowPlot(nasal, ndims = 50)
 ggsave(
   filename = "../figures/elbow_plot.png",
   plot = elbow,
-  width = 10,
-  height = 4,
+  width = 8,
+  height = 5,
   dpi = 300
 )
 
@@ -157,7 +157,7 @@ pca <- DimPlot(nasal, reduction = "pca") + ggtitle("PC1-PC2") +
   xlab(paste0("PC1 (", var_percent[1], "%)")) +
   ylab(paste0("PC2 (", var_percent[2], "%)")) +
   theme(
-    plot.title = element_text(hjust = 0.7)  # center the title
+    plot.title = element_text(hjust = 0.5) 
   )
 
 # PCA shows clear structure with cells forming distinct branches, 
