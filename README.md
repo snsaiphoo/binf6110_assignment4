@@ -294,12 +294,14 @@ Figure 16 displays the feature plots of _Isg15_ and _Hes1_ in macrophages across
 <div align="center">
 <img src="figures/macrophages_final_GO.png" width=600" height="700"/>
 <br>
-<b>Figure 18.  Gene Ontology (GO) ORA of macrophage pathways at DPI 14 versus DPI 5. </b> Dot plot showing GO biological pathways significantly enriched in macrophages at DPI 14 compared to DPI 5. Dot size represents the number of genes in each pathway and color indicates statistical significance. TNF response pathways are the most strongly enriched, alongside pathways related to protein stress responses and cell survival, suggesting macrophages remain actively engaged in inflammatory signaling and stress management during the resolution phase of infection.
+<b>Figure 18.  Gene Ontology (GO) ORA of macrophage pathways at DPI 14 versus DPI 5. </b> Dot plot showing GO biological pathways significantly enriched in macrophages at DPI 14 compared to DPI 5. Dot size represents the number of genes in each pathway and color indicates statistical significance.
 </div>
 
 <br>
 
+Figure 18 displays the GO ORA dot plot for macrophages at D14 compared to D05. The most significantly enriched pathways include cellular response to tumor necrosis factor and response to tumor necrosis factor, which show the highest gene ratios and lowest adjusted p-values. Additional enriched pathways include those related to protein stress responses such as endoplasmic reticulum unfolded protein response and response to unfolded protein, as well as pathways involved in the negative regulation of apoptotic signaling. Overall, the enriched pathways at D14 are associated with inflammatory signaling, protein stress responses, and cell survival.
 
+<br>
 ## Discussion 
 
 ## References
