@@ -39,12 +39,13 @@ vln_plot_1 <- VlnPlot(
   pt.size = 0
 )
 
-vln_plot_2 <- VlnPlot(
-  nasal,
-  features = c("percent.mt", "percent.ribo", "percent.hb"),
-  ncol = 3,
-  pt.size = 0
-)
+p1 <- VlnPlot(nasal, features = "percent.mt", pt.size = 0) + NoLegend()
+p2 <- VlnPlot(nasal, features = "percent.ribo", pt.size = 0) + NoLegend()
+p3 <- VlnPlot(nasal, features = "percent.hb", pt.size = 0.5,) + 
+  ylim(0, 6) 
+
+vln_plot_2 <- p1 | p2 | p3
+vln_plot_2
 
 ggsave(
   filename = "../figures/QC_violin_plot_1.png",
@@ -95,24 +96,26 @@ nasal <- subset(
 
 table(nasal$orig.ident)
 
-vln_plot_3 <- VlnPlot(nasal, features = c("nFeature_RNA", "nCount_RNA", "percent.mt", "percent.hb", "percent.ribo"), ncol = 5, pt.size = 0)
+p1 <- VlnPlot(nasal, features = "nFeature_RNA", pt.size = 0) + NoLegend()
+p2 <- VlnPlot(nasal, features = "nCount_RNA", pt.size = 0) + NoLegend()
+p3 <- VlnPlot(nasal, features = "percent.mt", pt.size = 0) + NoLegend()
+p4 <- VlnPlot(nasal, features = "percent.hb", pt.size = 0.1) + ylim(0, 6) + NoLegend()
+p5 <- VlnPlot(nasal, features = "percent.ribo", pt.size = 0)
+
+vln_plot_3 <- p1 | p2 | p3 | p4 | p5
+vln_plot_3
 
 ggsave(
   filename = "../figures/QC_violin_plot_3.png",
   plot = vln_plot_3,
-  width = 10,
+  width = 18,
   height = 4,
   dpi = 300
 )
 
 # QC Results
-<<<<<<< HEAD
 # Filtering removed 606 cells (0.39%) from 156,572 total, low removal rate
 # confirming data was already high quality prior to filtering.
-=======
-# Filtering removed 603 cells (0.39%) from 156,572 total, low removal rate
-# confirming data was already high quality
->>>>>>> 21b42be001d4e24744812f85749cef000021b2cb
 # Pre vs Post filtering cell counts
 # D02: 40,148 -> 40,002
 # D05: 26,344 -> 26,235
