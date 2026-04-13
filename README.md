@@ -68,7 +68,7 @@ To identify marker genes for each cluster, `FindAllMarkers()` was run using only
 The top 4 genes per cluster were selected based on the pct.1 and pct.2 criteria described above and researched to determine their known biological functions and infer cluster identity. Clusters were then manually assigned cell type labels, with several sharing the same high-level identity merged for simplicity. Not all clusters were annotated leaving the remaining clusters to be grouped as "Other" on the UMAP. Once complete, annotations were cross-referenced against the Broad Institute Single Cell Portal, where the data from the original study has been publicly deposited [3], to confirm labelling decisions. The final annotations were saved to the metadata and visualized on the UMAP.
 
 #### 4.3 - Automated Annotation
-Automated cell type annotation was performed using SingleR to compare with the manual annotations [13]. The Seurat object was converted to a SingleCellExperiment object and annotated against two reference datasets: MouseRNAseqData for general mouse cell types [22] and ImmGenData for mouse immune cell types [23], with the use of both informed by the immune and non-immune populations identified during manual annotation. Parallelization was applied using BiocParallel with `SnowParam()` across 4 workers to manage the increased computational load, as all processes were run on a local machine [24]. The resulting labels were added to the metadata and a comparison between manual and SingleR annotations was produced to assess agreement between the two approaches.
+Automated cell type annotation was performed using SingleR to compare with the manual annotations [13]. The Seurat object was converted to a SingleCellExperiment object and annotated against two reference datasets: `MouseRNAseqData` for general mouse cell types [22] and `ImmGenData` for mouse immune cell types [23], with the use of both informed by the immune and non-immune populations identified during manual annotation. Parallelization was applied using BiocParallel with `SnowParam()` across 4 workers to manage the increased computational load, as all processes were run on a local machine [24]. The resulting labels were added to the metadata and a comparison between manual and SingleR annotations was produced to assess agreement between the two approaches.
 
 ### 5.0 - Differential Gene Expression (DGE) Analysis
 
@@ -102,7 +102,7 @@ Gene symbols were first converted to Entrez IDs using `bitr()` with the mouse an
 <br>
 Violin plots were used to evaluate the quality of the data in the provided Seurat object. Figure 1 demonstrates the distributions of nFeature_RNA and nCount_RNA, which are the number of detected genes and the total RNA counts per cell across the five time points. These violin plots show a consistent distributions across all samples. The filtering thresholds based on this plot were set to nFeature_RNA between 500 and 3,800 and nCount_RNA between 1,000 and 10,000. The nFeature_RNA threshold was chosen to remove low-quality cells while retaining higher-quality cells with greater gene complexity. The nCount_RNA threshold was chosen to preserve the majority of cells while still capturing the variation in the upper tails across the different time points.
 </br>
-
+<br>
 <div align="center">
 <img src="figures/QC_violin_plot_2.png" width="600"/>
 <br>
@@ -112,7 +112,7 @@ Violin plots were used to evaluate the quality of the data in the provided Seura
 <br>
 Figure 2 shows the distributions of mitochondrial, ribosomal, and hemoglobin gene percentages across all five time points. The majority of cells show low mitochondrial and hemoglobin percentages, with only rare extreme outliers. To reduce potential noise, cells were filtered at thresholds of less than 15% mitochondrial, less than 50% ribosomal, and less than 5% hemoglobin reads [18]. Overall, these distributions indicate relatively clean data, suggesting that only minor filtering was required.
 <br>
-
+<br>
 <div align="center">
 <img src="figures/QC_knee_plot.png" width="400" height="400"/>
 <br>
