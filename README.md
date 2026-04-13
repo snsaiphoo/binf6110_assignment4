@@ -10,7 +10,7 @@ In this investigation, a single-cell RNA sequencing (scRNA-seq) analysis will be
 ### Design Rationale
 A typical scRNA-seq dataset is high-dimensional and requires several quality control steps, including filtering, normalization, and dimensionality reduction. Once preprocessing is complete, the data will be ready for clustering, cell type annotation, differential expression analysis, and functional enrichment. In this study, these steps will be carried out sequentially to characterize how cell populations change across infection stages.
 
-Selecting an appropriate scRNA-seq analysis framework involves balancing computational efficiency, accessibility, and biological reliability. Commonly used frameworks include Seurat (R), Scanpy (Python), and Bioconductor-based workflows such as OSCA. One benefit about Scanpy is that it handles large datasets efficiently and integrates well within the Python ecosystem [6]. While OSCA provides a more statistically rigorous framework through Bioconductor [7]. Benchmarking studies indicate that differences in performance between these tools are generally small for typical dataset sizes, even when accounting for the speed advantages of GPU-based methods [8]. Seurat, however, offers a more integrated and accessible workflow that covers preprocessing, clustering, and visualization within a single framework, and recent updates have improved its scalability and support for multimodal data [9]. Its widespread adoption and accessible documentation also support reproducibility. For these reasons, Seurat will be used for this analysis.
+Selecting an appropriate scRNA-seq analysis framework involves balancing computational efficiency, accessibility, and biological reliability. Commonly used frameworks include Seurat (R), Scanpy (Python), and Bioconductor-based workflows such as OSCA. One benefit of Scanpy is that it handles large datasets efficiently and integrates well within the Python ecosystem [6]. While OSCA provides a more statistically rigorous framework through Bioconductor [7]. Benchmarking studies indicate that differences in performance between these tools are generally small for typical dataset sizes, even when accounting for the speed advantages of GPU-based methods [8]. Seurat, however, offers a more integrated and accessible workflow that covers preprocessing, clustering, and visualization within a single framework, and recent updates have improved its scalability and support for multimodal data [9]. Its widespread adoption and accessible documentation also support reproducibility. For these reasons, Seurat will be used for this analysis.
 
 Cell type annotation allows clusters to be given biological meaning, but manual annotation is often subjective and inconsistent. Several automated tools have been developed to address this, including Seurat, SingleR, scmap, and CHETAH [9, 10, 11, 12]. Benchmarking studies show that most methods perform reasonably well overall, but accuracy tends to drop when distinguishing rare or closely related cell types [10]. Seurat identifies major cell types reliably but is less suited to resolving subtle or rare populations [10]. SingleR, by contrast, assigns cell identities by comparing expression profiles to reference transcriptomic datasets, which produces more consistent and objective annotations [13]. For these reasons, SingleR will be used to annotate cell types in this study.
 
@@ -133,7 +133,7 @@ Figure 3 shows the ranking of cells by total RNA count across all time points. T
 </br>
 Figure 4 shows the distributions of key quality control metrics across all five time points following filtering. Compared to the pre-filtered data, the distributions are tighter and more consistent, with reduced extreme values. Low mitochondrial and hemoglobin percentages are maintained across samples, indicating that the applied filtering thresholds effectively improved overall data quality.
 <br>
-
+<br>
 <div align="center">
 <b>Table 1.</b> Pre- and post-filtering cell counts per condition.
 
@@ -146,7 +146,9 @@ Figure 4 shows the distributions of key quality control metrics across all five 
 | Naive | 30,354 | 30,261 | 93 | 0.31% |
 | **Total** | **156,572** | **155,966** | **606** | **0.39%** |
 </div>
+
 <br>
+Table 1 summarizes the filtering results. Only a small number of cells were removed during filtering (0.39% overall), with similar percentages across all conditions. This shows that the dataset was already of high quality, and filtering mainly removed a few low-quality cells without changing the overall data structure.
 
 ### Single-Cell Analysis 
 <br>
