@@ -110,7 +110,7 @@ Violin plots were used to evaluate the quality of the data in the provided Seura
 </div>
 
 <br>
-Figure 2 shows the distributions of mitochondrial, ribosomal, and hemoglobin gene percentages across all five time points. High proportions of these genes can introduce noise into the biological signal [18]. The majority of cells showed low mitochondrial and hemoglobin percentages, with only rare extreme outliers. To reduce this noise, cells were filtered at thresholds of less than 15% mitochondrial, less than 50% ribosomal, and less than 5% hemoglobin reads [18]. Both figures demonstrate a relatively clean distribution, suggesting that only minor filtering would be required. 
+Figure 2 shows the distributions of mitochondrial, ribosomal, and hemoglobin gene percentages across all five time points. The majority of cells show low mitochondrial and hemoglobin percentages, with only rare extreme outliers. To reduce potential noise, cells were filtered at thresholds of less than 15% mitochondrial, less than 50% ribosomal, and less than 5% hemoglobin reads [18]. Overall, these distributions indicate relatively clean data, suggesting that only minor filtering was required.
 <br>
 
 <div align="center">
@@ -120,7 +120,7 @@ Figure 2 shows the distributions of mitochondrial, ribosomal, and hemoglobin gen
 </div>
 
 <br>
-Figure 3. Pre-filtering knee plot of cells ranked by total RNA counts. Cells from all five time points (Naive, D02, D05, D08, D14) are ranked from highest to lowest total RNA count (log10 nCount_RNA). The curve shows a clear inflection point early in the distribution, where all five samples converge at high nCount_RNA values before gradually declining. This gradual decline rather than a sharp drop off suggests that the majority of detected cells are real, high quality cells with no obvious contamination from empty droplets. Overall, this supported the filtering thresholds chosen from the violin plots and confirmed that the dataset required only minimal filtering.
+Figure 3 shows the ranking of cells by total RNA count across all time points. The gradual decline in the curve, rather than a sharp drop-off, indicates that most detected cells are high quality, with no clear separation of low-quality droplets. This supports the filtering thresholds chosen from the violin plots and suggests that only minimal filtering was necessary.
 </br>
 <br>
 
@@ -131,7 +131,7 @@ Figure 3. Pre-filtering knee plot of cells ranked by total RNA counts. Cells fro
 </div>
 
 </br>
-Figure 4. Post-filtering violin plots of key quality control metrics across all five time points Naive, D02, D05, D08, D14. Distributions are shown for all quality control metrics chosen for filtering. Following filtering, all samples show tighter and more consistent distributions across all metrics, with low mitochondrial and hemoglobin percentages and the removal of extreme outliers, confirming the effectiveness of the applied filtering thresholds.
+Figure 4 shows the distributions of key quality control metrics across all five time points following filtering. Compared to the pre-filtered data, the distributions are tighter and more consistent, with reduced extreme values. Low mitochondrial and hemoglobin percentages are maintained across samples, indicating that the applied filtering thresholds effectively improved overall data quality.
 <br>
 
 <div align="center">
@@ -166,7 +166,7 @@ Following normalization, HVG selection, and scaling, PCA was performed on the sc
 <b>Figure 6. PC1-PC2 plot of cells across all samples. </b> Scatter plot of cells projected onto the first two principal components (PC1: 11.2%, PC2: 9.8%), colored by sample identity. Cells from all five samples intermix across the principal component space.
 </div>
 </br>
-Figure 6 displays the PC1-PC2 plot, where cells from all five time points are well mixed across the PCA space, suggesting minimal batch effects. The distinct arms visible in the plot likely reflect major cell populations present across all samples.
+Figure 6 shows the PCA projection of cells across all time points. Cells from different samples are well mixed across the PCA space, indicating minimal batch effects. The visible structure likely reflects underlying biological variation rather than technical differences between samples.
 <br>
 </br>
 
